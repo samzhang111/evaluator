@@ -9,7 +9,7 @@ class Evaluator(object):
         ast_module = ast.parse(src)
         final_statement = ast_module.body.pop()
 
-        if self._is_evaluable_expression(final_statement):
+        if self._is_expression_statement(final_statement):
             executable = compile(ast_module, '<ast>', mode='exec')
             exec(executable, globals(), self.local_namespace)
             evaluable = compile(ast.Expression(final_statement.value), '<ast>', mode='eval')
@@ -17,10 +17,6 @@ class Evaluator(object):
         else:
             exec(src, globals(), self.local_namespace)
 
-    def _is_evaluable_expression(self, statement):
-        public_attributes = set(self._get_public_attributes(statement))
-        return public_attributes == set(['col_offset', 'lineno', 'value'])
-
-    def _get_public_attributes(self, variable):
-        return [x for x in dir(variable) if not x.startswith('_')]
+    def _is_expression_statement(self, statement):
+        return isinstance(statement, ast.Expr)
 

@@ -12,8 +12,8 @@ b = 2
 a
 """
 
-e = Evaluator(src)
-result_of_block = e.evaluate() # This will be 1
+demo_evaluator = Evaluator()
+result_of_block = demo_evaluator.evaluate(src) # This will be 1, and save "a" and "b" in demo_evaluator's namespace
 ```
 
 Multiline statements that do not end with an expression will be executed and return None.
